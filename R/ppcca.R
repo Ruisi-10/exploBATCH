@@ -5,7 +5,13 @@ function(Y,Yc,tYc,X,S,sumdiS,muhat,tp,tmp, minq=2, maxq=3,eps=0.8,n.cores){
   #cl=makeCluster(n.cores, type = "FORK")
   #registerDoParallel(cl, cores=n.cores)
   #if(n.cores==1) registerDoSEQ() else registerDoParallel(cores=n.cores) # multicore functionality
-  if(n.cores==1) registerDoSEQ() else   registerDoMC() # multicore functionality
+  #if(n.cores==1) registerDoSEQ() else   registerDoMC() # multicore functionality
+  if (n.cores == 1) {
+    registerDoSEQ()
+  } else {
+    cl <- makeCluster(n.cores)
+    registerDoParallel(cl)
+  }
   #mcoptions<-list(preschedule=TRUE)
   cat(paste("\nUsing",n.cores,"cores for parallel processing. \n\n"))
   V=300
