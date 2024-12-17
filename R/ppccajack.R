@@ -1,7 +1,15 @@
 ppccajack <-
 function(Y,res2,n.cores){
   options(cores = n.cores)
-  if(n.cores==1) registerDoSEQ() else   registerDoMC() # multicore functionality
+  if (n.cores == 1) {
+    registerDoSEQ()
+  } else {
+    # Use doParallel for Windows
+    cl <- makeCluster(n.cores)
+    registerDoParallel(cl)
+  }
+  # if(n.cores==1) registerDoSEQ() else   registerDoMC() # multicore functionality
+    
   V=res2$V
   eps=res2$eps
   repV=res2$repV
