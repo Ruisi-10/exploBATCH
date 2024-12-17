@@ -25,8 +25,13 @@ expBATCH <-function(D,batchCL,Conf=NA,mindim=2,maxdim=3,method="ppcca",scale="un
               "foreach","doParallel","doMC","compiler","devtools")
   toinstall<-required[!(required %in% installed)]
   if(length(toinstall) != 0){
-    source("https://bioconductor.org/biocLite.R")
-    biocLite(toinstall)
+    if (!requireNamespace("BiocManager", quietly = TRUE)) {
+      install.packages("BiocManager")
+    }
+    BiocManager::install(toinstall)
+    
+    # source("https://bioconductor.org/biocLite.R")
+    # biocLite(toinstall)
   }
   lapply(required, require, character.only = TRUE)
   requirfMM<-c("fMM","exploBATCHcolon","exploBATCHbreast")
